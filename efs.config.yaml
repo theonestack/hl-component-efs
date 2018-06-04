@@ -1,0 +1,14 @@
+maximum_availability_zones: 5
+ip_blocks:
+  efs:
+    - stack
+securityGroups:
+  efs:
+    -
+      rules:
+        -
+          IpProtocol: tcp
+          FromPort: 2049
+          ToPort: 2049
+      ips:
+        - stack

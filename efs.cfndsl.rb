@@ -1,7 +1,6 @@
 CloudFormation do
 
-  az_conditions_resources('SubnetCompute', maximum_availability_zones)
-  az_conditions(maximum_availability_zones)
+  az_conditions_resources('SubnetPersistence', maximum_availability_zones)
 
   EC2_SecurityGroup('SecurityGroupEFS') do
     GroupDescription FnJoin(' ', [ Ref('EnvironmentName'), component_name ])
@@ -18,10 +17,10 @@ CloudFormation do
 
   maximum_availability_zones.times do |az|
     EFS_MountTarget("MountTarget#{az}") do
-      Condition "Az#{az}"
+      Condition "#{az}SubnetPersistence"
       FileSystemId Ref('FileSystem')
       SecurityGroups [ Ref("SecurityGroupEFS") ]
-      SubnetId Ref("SubnetCompute#{az}")
+      SubnetId Ref("SubnetPersistence#{az}")
     end
   end
 

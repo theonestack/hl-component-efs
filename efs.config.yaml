@@ -1,7 +1,16 @@
 maximum_availability_zones: 5
+
+encrypt: true
+kms_key_alias: alias/efs
+
+performance_mode: generalPurpose # generalPurpose | maxIO
+throughput_mode: bursting # bursting | provisioned
+provisioned_throughput: 0.0
+
 ip_blocks:
   efs:
     - stack
+
 securityGroups:
   efs:
     -

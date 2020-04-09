@@ -41,6 +41,6 @@ CloudFormation do
 
   Output('FileSystem', Ref('FileSystem'))
 
-  Output('SecurityGroup', Ref('SecurityGroupEFS'))
+  Output('EFSSecurityGroup', Ref('SecurityGroupEFS'))
 
 end

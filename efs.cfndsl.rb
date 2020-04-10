@@ -1,7 +1,6 @@
 CloudFormation do
 
   maximum_availability_zones = external_parameters.fetch(:maximum_availability_zones, 5)
-  az_conditions_resources('SubnetPersistence', maximum_availability_zones)
 
   tags = []
   tags << { Key: 'Environment', Value: Ref(:EnvironmentName) }
@@ -32,13 +31,14 @@ CloudFormation do
 
   maximum_availability_zones.times do |az|
     EFS_MountTarget("MountTarget#{az}") do
-      Condition "#{az}SubnetPersistence"
       FileSystemId Ref('FileSystem')
       SecurityGroups [ Ref("SecurityGroupEFS") ]
-      SubnetId Ref("SubnetPersistence#{az}")
+      SubnetId FnSelect(az, Ref('SubnetIds'))
     end
   end
 
   Output('FileSystem', Ref('FileSystem'))
+
+  Output('EFSSecurityGroup', Ref('SecurityGroupEFS'))
 
 end

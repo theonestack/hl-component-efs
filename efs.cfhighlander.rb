@@ -8,10 +8,7 @@ CfhighlanderTemplate do
     ComponentParam 'StackOctet', '10', isGlobal: true
     ComponentParam 'VPCId', type: 'AWS::EC2::VPC::Id'
     ComponentParam 'NetworkPrefix', '10'
-
-    maximum_availability_zones.times do |az|
-      ComponentParam "SubnetPersistence#{az}"
-    end
+    ComponentParam 'SubnetIds', type: 'List<AWS::EC2::Subnet::Id>'
 
   end
 end

@@ -3,6 +3,10 @@ CloudFormation do
   maximum_availability_zones = external_parameters.fetch(:maximum_availability_zones, 5)
   az_conditions_resources('SubnetPersistence', maximum_availability_zones)
 
+  # efs access point related attributes
+  create_access_point =  external_parameters[:create_access_point]
+  access_point_attribute = external_parameters.fetch(:access_point_attribute,{})
+  
   tags = []
   tags << { Key: 'Environment', Value: Ref(:EnvironmentName) }
   tags << { Key: 'EnvironmentType', Value: Ref(:EnvironmentType) }
